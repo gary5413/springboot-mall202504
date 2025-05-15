@@ -1,17 +1,17 @@
 package com.example.gary.springboot_mall202504.model;
 import java.util.Date;
 
-import lombok.Data;
+import org.springframework.stereotype.Component;
 
+import com.example.gary.springboot_mall202504.constant.ProductCategory;
 
-
-
-
-@Data
+@Component
 public class Product {
   private Integer productId;
   private String productName;
-  private String category;
+//  private String category;
+//  改寫成Eumn類型
+  private ProductCategory category;
   private String imageUrl;
   private Integer price;
   private Integer stock;
@@ -20,7 +20,7 @@ public class Product {
   private Date lastModifiedDate;
   
 
-    public Product(Integer productId,String productName,String category,String imageUrl,String description,
+    public Product(Integer productId,String productName,ProductCategory category,String imageUrl,String description,
       Integer price,Integer stock,Date createDate,Date lastModifiedDate){
         this.productId=productId;
         this.productName=productName;
@@ -69,14 +69,14 @@ public class Product {
     /**
      * @return String return the category
      */
-    public String getCategory() {
+    public ProductCategory getCategory() {
         return category;
     }
 
     /**
      * @param category the category to set
      */
-    public void setCategory(String category) {
+    public void setCategory(ProductCategory category) {
         this.category = category;
     }
 
