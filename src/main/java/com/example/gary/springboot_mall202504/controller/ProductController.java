@@ -2,6 +2,7 @@ package com.example.gary.springboot_mall202504.controller;
 
 
 import com.example.gary.springboot_mall202504.constant.ProductCategory;
+import com.example.gary.springboot_mall202504.dto.ProductQueryParams;
 import com.example.gary.springboot_mall202504.dto.ProductRequest;
 import com.example.gary.springboot_mall202504.model.Product;
 import com.example.gary.springboot_mall202504.service.ProductService;
@@ -38,7 +39,12 @@ public class ProductController {
 		  @RequestParam(required = false) ProductCategory category,
 		  @RequestParam(required = false) String search
 		  ){
-	  List<Product> productList= productService.getProducts(category,search);
+	  ProductQueryParams productQueryParams=new ProductQueryParams();
+	  productQueryParams.setCategory(category);
+	  productQueryParams.setSearch(search);
+//	  改寫傳遞參數
+//	  List<Product> productList= productService.getProducts(category,search);
+	  List<Product> productList= productService.getProducts(productQueryParams);
 	  return ResponseEntity.status(HttpStatus.OK).body(productList);
   }
   

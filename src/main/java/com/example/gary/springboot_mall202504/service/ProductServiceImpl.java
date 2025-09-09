@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.gary.springboot_mall202504.constant.ProductCategory;
 import com.example.gary.springboot_mall202504.dao.ProductDao;
+import com.example.gary.springboot_mall202504.dto.ProductQueryParams;
 import com.example.gary.springboot_mall202504.dto.ProductRequest;
 import com.example.gary.springboot_mall202504.model.Product;
 
@@ -46,6 +47,11 @@ public void deleteProductById(Integer productId) {
 public List<Product> getProducts(ProductCategory productCategory,String search) {
 	
 	return productDao.getProducts(productCategory,search);
+}
+
+@Override
+public List<Product> getProducts(ProductQueryParams productQueryParams) {
+	return productDao.getProducts(productQueryParams);
 }
 
 }

@@ -13,6 +13,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Component;
 
 import com.example.gary.springboot_mall202504.constant.ProductCategory;
+import com.example.gary.springboot_mall202504.dto.ProductQueryParams;
 import com.example.gary.springboot_mall202504.dto.ProductRequest;
 import com.example.gary.springboot_mall202504.model.Product;
 import com.example.gary.springboot_mall202504.rowmapper.ProductRowMapper;
@@ -101,6 +102,26 @@ public class ProductDaoImpl implements ProductDao {
 		if(search !=null) {
 			sql =sql + " AND product_name LIKE :search";
 			map.put("search", "%" +search+"%" );
+		}
+		
+		List<Product> productList = namedParameterJdbcTemplate.query(sql,map, new ProductRowMapper());
+		return productList;
+	}
+
+	@Override
+	public List<Product> getProducts(ProductQueryParams productQueryParams) {
+		String sql = "SELECT * FROM product"
+				+ " WHERE 1=1";
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if(productQueryParams.getCategory() !=null) {
+			sql=sql+" AND category =:category";
+			map.put("category", productQueryParams.getCategory().name());
+		}
+		
+		if(productQueryParams.getSearch() !=null) {
+			sql =sql + " AND product_name LIKE :search";
+			map.put("search", "%" +productQueryParams.getSearch()+"%" );
 		}
 		
 		List<Product> productList = namedParameterJdbcTemplate.query(sql,map, new ProductRowMapper());
