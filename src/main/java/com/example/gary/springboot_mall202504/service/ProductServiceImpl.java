@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.example.gary.springboot_mall202504.constant.ProductCategory;
 import com.example.gary.springboot_mall202504.dao.ProductDao;
 import com.example.gary.springboot_mall202504.dto.ProductRequest;
 import com.example.gary.springboot_mall202504.model.Product;
@@ -42,9 +43,9 @@ public void deleteProductById(Integer productId) {
 }
 
 @Override
-public List<Product> getProducts() {
+public List<Product> getProducts(ProductCategory productCategory,String search) {
 	
-	return productDao.getProducts();
+	return productDao.getProducts(productCategory,search);
 }
 
 }

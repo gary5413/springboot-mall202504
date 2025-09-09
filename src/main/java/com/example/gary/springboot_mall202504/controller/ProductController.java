@@ -1,6 +1,7 @@
 package com.example.gary.springboot_mall202504.controller;
 
 
+import com.example.gary.springboot_mall202504.constant.ProductCategory;
 import com.example.gary.springboot_mall202504.dto.ProductRequest;
 import com.example.gary.springboot_mall202504.model.Product;
 import com.example.gary.springboot_mall202504.service.ProductService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,8 +34,11 @@ public class ProductController {
   private ProductService productService;
   
   @GetMapping("/products")
-  public ResponseEntity<List<Product>> getProducts(){
-	  List<Product> productList= productService.getProducts();
+  public ResponseEntity<List<Product>> getProducts(
+		  @RequestParam(required = false) ProductCategory category,
+		  @RequestParam(required = false) String search
+		  ){
+	  List<Product> productList= productService.getProducts(category,search);
 	  return ResponseEntity.status(HttpStatus.OK).body(productList);
   }
   
@@ -47,7 +52,6 @@ public class ProductController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
   }
-  
   @PostMapping("/products")
   public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequest productRequest){
 	  Integer productId= productService.createProduct(productRequest);
