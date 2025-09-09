@@ -5,6 +5,9 @@ import com.example.gary.springboot_mall202504.dto.ProductRequest;
 import com.example.gary.springboot_mall202504.model.Product;
 import com.example.gary.springboot_mall202504.service.ProductService;
 import jakarta.validation.Valid;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -28,6 +31,12 @@ public class ProductController {
   @Autowired
   private ProductService productService;
   
+  @GetMapping("/products")
+  public ResponseEntity<List<Product>> getProducts(){
+	  List<Product> productList= productService.getProducts();
+	  return ResponseEntity.status(HttpStatus.OK).body(productList);
+  }
+  
   @GetMapping("/products/{productId}")
   public ResponseEntity<Product> getProduct(@PathVariable Integer productId){
     Product product= productService.getProductById(productId);
@@ -38,7 +47,7 @@ public class ProductController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
   }
-
+  
   @PostMapping("/products")
   public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequest productRequest){
 	  Integer productId= productService.createProduct(productRequest);

@@ -89,4 +89,12 @@ public void deleteProductById(Integer productId) {
 	namedParameterJdbcTemplate.update(sql, map);
 }
 
+@Override
+public List<Product> getProducts() {
+	String sql="SELECT * FROM product";
+	Map<String, Object> map=new HashMap<String, Object>();
+	List<Product> productList=namedParameterJdbcTemplate.query(sql, new ProductRowMapper());
+	return productList;
+}
+
 }
