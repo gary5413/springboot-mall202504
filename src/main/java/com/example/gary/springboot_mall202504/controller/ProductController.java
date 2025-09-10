@@ -6,10 +6,13 @@ import com.example.gary.springboot_mall202504.dto.ProductQueryParams;
 import com.example.gary.springboot_mall202504.dto.ProductRequest;
 import com.example.gary.springboot_mall202504.model.Product;
 import com.example.gary.springboot_mall202504.service.ProductService;
+import com.example.gary.springboot_mall202504.util.Page;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +41,10 @@ public class ProductController {
   private ProductService productService;
   
   @GetMapping("/products")
-  public ResponseEntity<List<Product>> getProducts(
+// 分頁2 回傳商品數據+總筆數
+  public ResponseEntity<Page<Product>> getProducts(
+// 分頁1 僅回傳商品數據
+//public ResponseEntity<List<Product>> getProducts(
 //		  查詢條件 filtering
 		  @RequestParam(required = false) ProductCategory category,
 		  @RequestParam(required = false) String search,
@@ -58,8 +64,20 @@ public class ProductController {
 	  productQueryParams.setOffset(offset);
 //	  改寫傳遞參數
 //	  List<Product> productList= productService.getProducts(category,search);
+//	  取得product list
 	  List<Product> productList= productService.getProducts(productQueryParams);
-	  return ResponseEntity.status(HttpStatus.OK).body(productList);
+//	  取得 product 總數
+	  Integer total=productService.countProduct(productQueryParams);
+//	  分頁
+	  Page<Product> page=new Page<>();
+	  page.setLimit(limit);
+	  page.setOffset(offset);
+	  page.setTotal(total);
+	  page.setResults(productList);
+	// 僅回傳商品數據
+//	  return ResponseEntity.status(HttpStatus.OK).body(productList);
+//	  回傳商品數據+總筆數
+	  return ResponseEntity.status(HttpStatus.OK).body(page);
   }
   
   @GetMapping("/products/{productId}")
