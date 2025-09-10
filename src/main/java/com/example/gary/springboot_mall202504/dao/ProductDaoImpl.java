@@ -114,15 +114,17 @@ public class ProductDaoImpl implements ProductDao {
 				+ " WHERE 1=1";
 		Map<String, Object> map = new HashMap<String, Object>();
 //		查詢條件
-		if(productQueryParams.getCategory() !=null) {
-			sql=sql+" AND category =:category";
-			map.put("category", productQueryParams.getCategory().name());
-		}
-		
-		if(productQueryParams.getSearch() !=null) {
-			sql =sql + " AND product_name LIKE :search";
-			map.put("search", "%" +productQueryParams.getSearch()+"%" );
-		}
+//		提煉程式碼
+		sql= addFilteringSql(sql, map, productQueryParams);
+//		if(productQueryParams.getCategory() !=null) {
+//			sql=sql+" AND category =:category";
+//			map.put("category", productQueryParams.getCategory().name());
+//		}
+//		
+//		if(productQueryParams.getSearch() !=null) {
+//			sql =sql + " AND product_name LIKE :search";
+//			map.put("search", "%" +productQueryParams.getSearch()+"%" );
+//		}
 //		排序
 		sql=sql+" ORDER BY "+productQueryParams.getOrderBy()+" "+productQueryParams.getSort();
 //		分頁
@@ -140,6 +142,24 @@ public class ProductDaoImpl implements ProductDao {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 //		查詢條件
+//		提煉程式碼
+		sql =addFilteringSql(sql, map, productQueryParams);
+//		if(productQueryParams.getCategory() !=null) {
+//			sql=sql+" AND category =:category";
+//			map.put("category", productQueryParams.getCategory().name());
+//		}
+//		
+//		if(productQueryParams.getSearch() !=null) {
+//			sql =sql + " AND product_name LIKE :search";
+//			map.put("search", "%" +productQueryParams.getSearch()+"%" );
+//		}
+		Integer total= namedParameterJdbcTemplate.queryForObject(sql,map,Integer.class);
+		return total;
+	}
+	
+//	提煉程式碼
+	private String addFilteringSql(String sql,Map<String, Object> map,ProductQueryParams productQueryParams) {
+//		查詢條件
 		if(productQueryParams.getCategory() !=null) {
 			sql=sql+" AND category =:category";
 			map.put("category", productQueryParams.getCategory().name());
@@ -149,8 +169,7 @@ public class ProductDaoImpl implements ProductDao {
 			sql =sql + " AND product_name LIKE :search";
 			map.put("search", "%" +productQueryParams.getSearch()+"%" );
 		}
-		Integer total= namedParameterJdbcTemplate.queryForObject(sql,map,Integer.class);
-		return total;
+		return sql;
 	}
 
 }
