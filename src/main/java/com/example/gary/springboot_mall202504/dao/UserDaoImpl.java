@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.example.gary.springboot_mall202504.dto.UserRegisterRequest;
@@ -66,6 +65,8 @@ public class UserDaoImpl implements UserDao {
 			return null;
 		}
 	}
+
+	
 	
 	
 	
