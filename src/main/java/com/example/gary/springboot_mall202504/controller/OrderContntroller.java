@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.gary.springboot_mall202504.dto.CreateOrderRequest;
+import com.example.gary.springboot_mall202504.model.Order;
 import com.example.gary.springboot_mall202504.service.OrderService;
 
 import jakarta.validation.Valid;
@@ -25,7 +26,10 @@ public class OrderContntroller {
 			@RequestBody @Valid CreateOrderRequest createOrderRequest
 			){
 		Integer orderId= orderService.createOrder(userId,createOrderRequest);
-		return ResponseEntity.status(HttpStatus.CREATED).body(orderId);
+		
+		Order order=orderService.getOrderById(orderId);
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(order);
 	}
 	
 }
