@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.validator.internal.util.privilegedactions.NewInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -102,6 +103,8 @@ public class OrderDaoImpl implements OrderDao{
 		List<OrderItem> orderItemList=namedParameterJdbcTemplate.query(sql, map,new OrderItemRowMapper());
 		return orderItemList;
 	}
+
+	
 	
 	
 

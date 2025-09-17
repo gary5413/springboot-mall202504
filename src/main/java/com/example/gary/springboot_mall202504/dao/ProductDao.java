@@ -9,6 +9,7 @@ import com.example.gary.springboot_mall202504.model.Product;
 
 public interface ProductDao {
 	List<Product> getProducts(ProductCategory productCategory,String search);
+	
 	List<Product> getProducts(ProductQueryParams productQueryParams);
 
 	Product getProductById(Integer productId);
@@ -20,4 +21,6 @@ public interface ProductDao {
 	void deleteProductById(Integer productId);
 	
 	Integer countProduct(ProductQueryParams productQueryParams);
+	
+	void updateStock(Integer productId,Integer stock);
 }
