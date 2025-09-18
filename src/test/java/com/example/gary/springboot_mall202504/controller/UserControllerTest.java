@@ -2,6 +2,7 @@ package com.example.gary.springboot_mall202504.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 import org.junit.jupiter.api.Test;
 
 import com.example.gary.springboot_mall202504.dto.UserLoginRequest;
@@ -22,6 +23,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+@SpringBootTest
+@AutoConfigureMockMvc
 class UserControllerTest {
 
 	@Autowired
