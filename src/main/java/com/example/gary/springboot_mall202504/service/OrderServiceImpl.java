@@ -16,6 +16,7 @@ import com.example.gary.springboot_mall202504.dao.ProductDao;
 import com.example.gary.springboot_mall202504.dao.UserDao;
 import com.example.gary.springboot_mall202504.dto.BuyItem;
 import com.example.gary.springboot_mall202504.dto.CreateOrderRequest;
+import com.example.gary.springboot_mall202504.dto.OrderQueryParams;
 import com.example.gary.springboot_mall202504.model.Order;
 import com.example.gary.springboot_mall202504.model.OrderItem;
 import com.example.gary.springboot_mall202504.model.Product;
@@ -97,6 +98,21 @@ public class OrderServiceImpl implements OrderService {
 		List<OrderItem> orderItemList=orderDao.getOrderItemByOrderId(orderId);
 		order.setOrderList(orderItemList);
 		return order;
+	}
+
+	@Override
+	public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+		List<Order> orderList= orderDao.getOrders(orderQueryParams);
+		for(Order order:orderList) {
+			List<OrderItem> orderItemList = orderDao.getOrderItemByOrderId(order.getOrderId());
+			order.setOrderList(orderItemList);
+		}
+		return orderList;
+	}
+
+	@Override
+	public Integer countOrder(OrderQueryParams orderQueryParams) {
+		return orderDao.countOrder(orderQueryParams);
 	}
 
 	
